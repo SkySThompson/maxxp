@@ -1,0 +1,156 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maxx Energy - Homepage</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <header>
+        <div class="navbar">
+            <img src="images/logo.png" alt="Maxx Energy Logo" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="#">HOME</a></li>
+                    <li><a href="#">ABOUT</a></li>
+                    <li><a href="FAQ.html">FAQ</a></li>
+                </ul>
+            </nav>
+            <div class="search-box">
+                <input type="text" placeholder="Search here">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+    </header>
+
+   <!-- Hero Section -->
+<section class="hero">
+    <div class="slider">
+        <img src="images/background.jpeg" class="hero-image active" alt="Wind Turbines">
+        <div class="slide-text">
+            <span class="strong-text">Empowering smart decisions </span><br>
+            <span class="strong-text">with real-time energy data</span><br>
+            <span class="small-text">enabling efficiency, sustainability, and cost savings.</span>
+        </div>
+        <img src="images/im2.jpeg" class="hero-image" alt="Solar Panels">
+        
+        <img src="images/img3.jpeg" class="hero-image" alt="Hydro Energy">
+        
+        
+        
+        <button class="next" onclick="changeSlide(1)">&#10095;</button>
+        <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
+    </div>
+    
+    <div class="overlay"></div>
+    <div class="hero-content">
+        
+        <a href="join.html" class="btn signup">Sign up</a>
+        <a href="login.html" class="btn login">Login</a>
+    </div>
+</section>
+<!-- New Icons Section -->
+<section class="icons-section">
+    <div class="icons-container">
+        <div class="icon-cardd">
+            <img src="images/re.png" alt="Renewable Energy">
+            <p>Renewable Energy</p>
+        </div>
+        <div class="icon-cardd">
+            <img src="images/new-removebg-preview.png" alt="Innovation Energy">
+            <p>New Energy</p>
+        </div>
+        <div class="icon-cardd">
+            <img src="images/se.jpg" alt="Energy Saving">
+            <p>Energy-Saving Energy</p>
+        </div>
+        <div class="icon-cardd">
+            <img src="images/gb-removebg-preview.png" alt="Eco Energy">
+            <p>Eco-Friendly Energy</p>
+        </div>
+    </div>
+</section>
+<!-- Energy Call to Action Section -->
+<section class="energy-action">
+    <div class="energy-container">
+        <div class="energy-card">
+            <div class="icon">
+                <img src="images/left.jpeg" alt="Green Lightbulb">
+            </div>
+            <h3>Smart Energy</h3>
+        </div>
+
+        <div class="energy-center">
+            <h2>Join the Movement Towards a Greener Future!</h2>
+            <p>
+                At MAXX Energy, we are committed to powering a sustainable future with clean
+                 and efficient energy solutions. 
+            <a href="login.html" class="btn get-started">GET STARTED</a>
+        </div>
+
+        <div class="energy-card">
+            <div class="icon">
+                <img src="images/right.jpeg" alt="Eco House">
+            </div>
+            <h3>Eco-Friendly Home</h3>
+        </div>
+    </div>
+</section>
+
+<!-- Energy Information Section -->
+<section class="energy-info">
+    <div class="energy-content">
+        <h2>Powering a Sustainable Future with <br> Data-Driven Energy Solutions</h2>
+        <p>
+            At <strong>MAXX Energy</strong>, we believe in a cleaner, smarter, and more efficient future.
+            Our <strong>Enterprise Data Access Portal</strong> is designed to provide real-time insights into 
+            solar plant generation, ensuring that stakeholders have the tools they need to 
+            analyze, track, and optimize energy production.
+        </p>
+    </div>
+    <div class="energy-image">
+        <img src="images/sce-removebg-preview.png" alt="Energy Innovation">
+    </div>
+</section>
+
+
+
+    <!-- Contact Form -->
+    <section class="contact">
+        <h2>CONTACT US</h2>
+        <form id="contact-form">
+            <input type="text" name="name" placeholder="Enter your full name" required>
+            <input type="email" name="email" placeholder="Enter your email" required>
+            <textarea name="message" placeholder="message" required></textarea>
+            <button type="submit">Send your Message</button>
+        </form>
+        <p id="Response-message"></p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <h3>Help</h3>
+                <ul>
+                    <li><a href="#">About us</a></li>
+                    <li><a href="FAQ.html" target="_blank">FAQ</a></li>
+                    <li><a href="https://maxxpotential.com/work-at-maxx/">Careers</a></li>
+                </ul>
+            </div>
+            <div class="social-icons">
+                <a href="https://www.linkedin.com/company/maxx-potential/posts/?feedView=all" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://twitter.com/MaxxTechnology?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" target="_blank"><i class="fab fa-x-twitter"></i></a>
+                <a href="https://www.facebook.com/maxxpotentialllc" target="_blank"><i class='bx bxl-facebook-circle'></i></a>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+    <script src="scripthome.js"></script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Maxx Energy</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let hcaptchaReady = false;
+
+            function onCaptchaSuccess(token) {
+                console.log('Captcha completed successfully. Token:', token);
+                document.getElementById("captcha-token").value = token; // Store token in hidden input
+            }
+
+            function validateCaptcha() {
+                return new Promise((resolve) => {
+                    const token = hcaptcha.getResponse();
+                    if (token) {
+                        resolve(token);
+                    } else {
+                        document.getElementById('error-message').textContent = "Please complete the CAPTCHA.";
+                        resolve(false);
+                    }
+                });
+            }
+
+            async function handleLogin(event) {
+                event.preventDefault(); // Prevent default form submission
+
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                const token = await validateCaptcha();
+
+                if (!token) return;
+
+                // Prepare data to send in the POST request
+                const loginData = {
+                    email: username,
+                    password: password,
+                    token: token // Use validated hCaptcha token
+                };
+
+                try {
+                    const response = await fetch('/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(loginData)
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        // On successful login, redirect to profile page with welcome message
+                        console.log('Redirecting to:', data.redirect);
+                        window.location.href = data.redirect + '?message=' + encodeURIComponent(data.welcomeMessage);
+                    } else {
+                        if (data.error === 'User does not exist') {
+                            document.getElementById('error-message').textContent = "User not found. Redirecting to sign-up...";
+                            setTimeout(() => {
+                                window.location.href = 'join.html';
+                            }, 3000);
+                        } else {
+                            document.getElementById('error-message').textContent = data.error || "Login failed. Please check your credentials.";
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    document.getElementById('error-message').textContent = "Something went wrong. Please try again.";
+                }
+            }
+
+            document.getElementById("login-form").addEventListener("submit", handleLogin);
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="form-box">
+            <a href="/">
+                <img src="images/logo.png" alt="Maxx Energy Logo" class="logo">
+            </a>            
+            <h2>Login to Maxx Energy</h2>
+            <form id="login-form">
+                <label for="username">Email</label>
+                <input type="email" id="username" placeholder="Enter your email" required>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password" required>
+
+                <div class="password-options">
+                    <a href="reset.html">Forgot Password?</a>
+                </div>
+
+                <!-- hCaptcha -->
+                <div class="h-captcha" 
+                     data-sitekey="60bca22a-5016-4df8-b814-385683ee683c"
+                     data-theme="dark"
+                     data-size="normal"
+                     data-callback="onCaptchaSuccess"></div>
+                <input type="hidden" id="captcha-token" name="captcha-token">
+
+                <!-- Error Message Display -->
+                <p id="error-message" class="error-text"></p>
+
+                <button type="submit">LOG IN</button>
+            </form>
+            <p>Don't have an account? <a href="join.html">Join now</a></p>
+        </div>
+    </div>
+    <div class="profile-icon">
+        <a href="profile.html">
+             <img src="images/profile-icon.png" alt="User Profile">
+        </a>
+    </div>    
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maxx Energy Plant - FAQ</title>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            overflow-x: hidden; /* Prevents horizontal scrolling */
+            background-color: #eff4f5; /* Light yellow background */
+            color: #333;
+            line-height: 1.6;
+            overflow-y: scroll;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header with logo and title */
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .logo {
+            position: absolute;
+            left: 40;
+            top: 50%;
+            transform: translateY(-50%);
+            height:60px;
+            width:max-content;
+        }
+
+
+        .header h1 {
+            width: 100%;
+            text-align: center;
+            color: #1a5f7a;
+            margin-bottom: 0; /* Removed bottom margin since we're using flexbox */
+            font-size: 50px;
+            font-weight: bold;
+        }
+
+        .search-container {
+            width: 100%;
+            max-width: none;
+            padding: 20px;
+            border: 2px solid #1a5f7a;
+            border-radius: 5px;
+            font-size: 25px;
+            margin-bottom: 30px;
+            background-color: white; /* White background for contrast with yellow */
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #1a5f7a;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .category-btn {
+            padding: 10px 20px;
+            background-color: #1a5f7a;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 14px;
+        }
+
+        .category-btn:hover {
+            background-color: #134b61;
+        }
+
+        .category-btn.active {
+            background-color: #134b61;
+        }
+
+        .faq-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .faq-item {
+            background-color: white; /* White background for FAQ items for contrast */
+            border-radius: 5px;
+            padding: 20px;
+            border-left: 5px solid #ddd; /* Default border */
+            box-shadow: 0 2px 5px rgba(81, 203, 130, 0.1);
+            box-shadow: 0 2px 5px rgba(117, 194, 170, 0.1);
+        }
+
+        .faq-question {
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 35px;
+        }
+
+        .faq-answer {
+            margin-top: 15px;
+            display: none;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            font-size: 22px;
+        }
+
+        .faq-answer.show {
+            display: block;
+        }
+
+        .image-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .image-container img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            .header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .logo {
+                position: static;
+                transform: none;
+                margin-bottom: 10px;
+                height: 50px;
+            }
+            .header h1 {
+                font-size: 30px;
+            }
+            .category-btn {
+                font-size: 12px;
+            }
+            .faq-question {
+                font-size: 16px;
+            }
+            .faq-answer {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="MAXX-Energy-Logo-1B.png" alt="Maxx Energy Logo" class="logo">
+            <h1>Maxx Energy Plant FAQ</h1>
+        </div>
+        
+        <div class="image-container">
+            <img src="Hands.png" alt="Hands raised" class="header-image">
+        </div>
+
+        <div class="search-container">
+            <p style="font-weight: bold; text-align: center;">Find answers to commonly asked questions about our energy plant</p>
+            <input type="text" class="search-input" placeholder="Search frequently asked questions..." id="searchInput">
+        </div>
+
+        <div class="categories">
+            <button class="category-btn active" data-category="all">All</button>
+            <button class="category-btn" data-category="general">General</button>
+            <button class="category-btn" data-category="technical">Technical</button>
+            <button class="category-btn" data-category="safety">Safety</button>
+            <button class="category-btn" data-category="environmental">Environmental</button>
+        </div>
+
+        <div class="faq-container" id="faqContainer">
+            <!-- FAQ items will be dynamically populated -->
+        </div>
+    </div>
+
+    <script>
+        const faqData = [
+            { category: 'general', question: 'What is Maxx Energy Plant?', answer: 'Maxx Energy Plant is a state-of-the-art power generation facility that produces clean and sustainable energy for the surrounding communities.' },
+            { category: 'technical', question: 'What type of energy does the plant generate?', answer: 'Our plant utilizes multiple energy sources including solar, wind, and natural gas to generate electricity efficiently and reliably.' },
+            { category: 'safety', question: 'What safety measures are in place at the facility?', answer: 'We maintain strict safety protocols, regular inspections, and automated monitoring systems to ensure the highest level of safety for our employees and the community.' },
+            { category: 'environmental', question: 'How does the plant minimize environmental impact?', answer: 'We employ advanced emission control technologies, waste management systems, and regularly monitor our environmental impact to maintain compliance with environmental regulations.' },
+            { category: 'general', question: 'How many households does the plant serve?', answer: 'Our plant provides power to approximately 100,000 households in the surrounding region.' },
+            { category: 'technical', question: 'What is the efficiency rate of the plant?', answer: 'The efficiency rate of our plant is around 40%, thanks to the combined use of renewable and traditional energy sources.' },
+            { category: 'safety', question: 'What are the emergency procedures at the plant?', answer: 'In case of emergencies, our plant has well-defined evacuation plans, regular drills, and coordination with local emergency services.' },
+            { category: 'environmental', question: 'How do you handle waste products?', answer: 'We have robust waste management practices including recycling, safe disposal, and regular audits to ensure environmental compliance.' },
+            { category: 'general', question: 'What community programs does the plant support?', answer: 'We support various community programs including local schools, environmental conservation projects, and energy education initiatives.' },
+            { category: 'technical', question: 'How is the energy output monitored?', answer: 'Our energy output is monitored using state-of-the-art SCADA systems that provide real-time data and analytics.' },
+            { category: 'safety', question: 'Are there health risks associated with the plant?', answer: 'We follow stringent safety protocols to minimize any health risks. Regular health and safety audits are conducted to ensure compliance.' },
+            { category: 'environmental', question: 'What steps are taken to protect local wildlife?', answer: 'We work closely with environmental experts to protect local wildlife, including habitat conservation and monitoring programs.' }
+        ];
+
+        const faqContainer = document.getElementById('faqContainer');
+        const searchInput = document.getElementById('searchInput');
+        const categoryButtons = document.querySelectorAll('.category-btn');
+
+        function createFAQElement(faq) {
+            const div = document.createElement('div');
+            div.className = 'faq-item';
+            div.setAttribute('data-category', faq.category);
+            div.innerHTML = `
+                <div class="faq-question">
+                    ${faq.question}
+                    <span class="toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    ${faq.answer}
+                </div>
+            `;
+            return div;
+        }
+
+        function displayFAQs(filter = '') {
+            const activeCategory = document.querySelector('.category-btn.active').getAttribute('data-category');
+            faqContainer.innerHTML = '';
+            
+            faqData.forEach(faq => {
+                if ((activeCategory === 'all' || faq.category === activeCategory) &&
+                    (faq.question.toLowerCase().includes(filter.toLowerCase()) ||
+                     faq.answer.toLowerCase().includes(filter.toLowerCase()))) {
+                    faqContainer.appendChild(createFAQElement(faq));
+                }
+            });
+        }
+
+        searchInput.addEventListener('input', (e) => {
+            displayFAQs(e.target.value);
+        });
+
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                displayFAQs(searchInput.value);
+            });
+        });
+
+        faqContainer.addEventListener('click', (e) => {
+            if (e.target.closest('.faq-question')) {
+                const answer = e.target.closest('.faq-item').querySelector('.faq-answer');
+                const toggle = e.target.closest('.faq-item').querySelector('.toggle');
+                const expanded = answer.classList.toggle('show');
+                toggle.textContent = expanded ? '-' : '+';
+                e.target.closest('.faq-question').setAttribute('aria-expanded', expanded);
+            }
+        });
+
+        displayFAQs();
+    </script>
+</body>
+</html>

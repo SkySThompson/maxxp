@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Maxx Energy</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-box">
+            <a href="index.html">
+                <img src="images/logo.png" alt="Maxx Energy Logo" class="logo">
+            </a>
+            <h2>Join Maxx Energy</h2>
+            <form id="signup-form">
+                <label for="signup-email">Email</label>
+                <input type="email" id="signup-email" placeholder="hannah.green@test.com" required>
+
+                <label for="signup-password">Password</label>
+                <input type="password" id="signup-password" placeholder="Password123@" required>
+
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" placeholder="Password123@" required>
+
+                <div class="hcaptcha-box">
+                    <div class="h-captcha" data-sitekey="60bca22a-5016-4df8-b814-385683ee683c"></div>
+                </div>
+
+                <input type="hidden" id="captcha-token" name="captcha-token">
+
+                <div class="remember-me">
+                    <input type="checkbox" id="remember">
+                    <label for="remember">Remember me on this computer</label>
+                </div>
+
+                <button type="submit">Join</button>
+                <p id="error-message" class="error"></p>
+            </form>
+            <p>Already have an account? <a href="login.html">Log in</a></p>
+        </div>
+    </div>
+
+    <script src="https://hcaptcha.com/1/api.js" async defer></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            function onCaptchaSuccess(token) {
+                console.log('Captcha completed successfully. Token:', token);
+                document.getElementById("captcha-token").value = token;
+            }
+
+            async function handleSignup(event) {
+                event.preventDefault(); 
+
+                const email = document.getElementById('signup-email').value;
+                const password = document.getElementById('signup-password').value;
+                const confirmPassword = document.getElementById('confirm-password').value;
+                const token = hcaptcha.getResponse();
+
+                if (!token) {
+                    document.getElementById('error-message').textContent = "Please complete the CAPTCHA.";
+                    return;
+                }
+
+                const signupData = { email, password, token };
+
+                try {
+                    const response = await fetch('/join', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(signupData)
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        window.location.href = 'profile.html?welcome=true';
+                    } else {
+                        document.getElementById('error-message').textContent = data.error || "Signup failed.";
+                    }
+                } catch (error) {
+                    document.getElementById('error-message').textContent = "An error occurred. Try again.";
+                }
+            }
+
+            document.getElementById("signup-form").addEventListener("submit", handleSignup);
+        });
+    </script>
+</body>
+</html>
